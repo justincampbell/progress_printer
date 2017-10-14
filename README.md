@@ -1,43 +1,53 @@
-# ProgressPrinter
+# ProgressPrinter [![Gem Version](https://badge.fury.io/rb/progress_printer.svg)](https://badge.fury.io/rb/progress_printer) [![Build Status](https://travis-ci.org/justincampbell/progress_printer.svg?branch=master)](https://travis-ci.org/justincampbell/progress_printer)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/progress_printer`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+> Logs the progress of an operation, with estimated completion time.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+When using [Bundler](https://bundler.io), add this to your project's `Gemfile`:
 
 ```ruby
 gem 'progress_printer'
 ```
 
-And then execute:
+Otherwise, install it with the `gem` command:
 
-    $ bundle
 
-Or install it yourself as:
-
-    $ gem install progress_printer
+```shell
+$ gem install progress_printer
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+### Basic Usage
 
-## Development
+A `ProgressPrinter` must be created, started, and finished. Use `#increment` within your operation to increment the progress.
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+```rb
+require 'progress_printer'
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+printer = ProgressPrinter.new(name: "Counting", total: 250)
+printer.start
+250.times { sleep 0.05; printer.increment }
+printer.finish
+```
+
+Output:
+
+```
+Counting:   0/250   0% calculating...
+Counting: 100/250  40% ~8s
+Counting: 200/250  80% ~2s
+Counting: 250/250 100% ~0s
+```
+
+### Arguments
+
+* `total` - The total number of iterations expected. If this is omitted, estimated completion time will not be shown.
+* `name` - A string to display next to each printed line. This helps identify the current operation, or the specific progress printer if using multiple.
+* `every` (Default: `100`) - How many iterations should pass in between printing a line.
+* `out` (Default: `$stdout`) - An object responding to `#puts` for printing the progress to.
 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/justincampbell/progress_printer. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
-## Code of Conduct
-
-Everyone interacting in the ProgressPrinter project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/justincampbell/progress_printer/blob/master/CODE_OF_CONDUCT.md).
