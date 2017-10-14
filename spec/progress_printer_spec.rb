@@ -59,6 +59,41 @@ RSpec.describe ProgressPrinter do
     end
   end
 
+  describe ".wrap" do
+    it "creates a new instance with all args and wraps the given block" do
+      described_class.wrap name: "Count", every: 1, total: 1, out: output do |progress|
+        progress.increment
+      end
+
+      expect(output.string).to eq(
+        <<~OUTPUT
+          Count: 0/1   0% calculating...
+          Count: 1/1 100% ~0s
+          Count: 1/1 100% ~0s
+        OUTPUT
+      )
+    end
+  end
+
+  describe "#wrap" do
+    it "starts and finishes around a given block" do
+      expect(printer).to receive(:start).and_call_original
+      expect(printer).to receive(:finish).and_call_original
+
+      printer.wrap do |printer|
+        printer.increment
+      end
+
+      expect(output.string).to eq("0\n1\n")
+    end
+
+    it "returns the value of the block" do
+      result = printer.wrap { :abc }
+
+      expect(result).to eq(:abc)
+    end
+  end
+
   describe "#start" do
     it "prints 0" do
       printer.start
