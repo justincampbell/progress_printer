@@ -41,6 +41,21 @@ Counting: 200/250  80% ~2s
 Counting: 250/250 100% ~0s
 ```
 
+You can also achieve the same results by using `.wrap` or `#wrap`:
+
+```rb
+ProgressPrinter.wrap(name: "Counting", total: 250) do |progress|
+  250.times { sleep 0.05; progress.increment }
+end
+```
+
+```rb
+printer = ProgressPrinter.new(name: "Counting", total: 250)
+printer.wrap do |progress|
+  250.times { sleep 0.05; progress.increment }
+end
+```
+
 ### Arguments
 
 * `total` - The total number of iterations expected. If this is omitted, estimated completion time will not be shown.

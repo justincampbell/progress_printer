@@ -28,6 +28,17 @@ class ProgressPrinter
     @out = out
   end
 
+  def self.wrap(*args, &block)
+    new(*args).wrap(&block)
+  end
+
+  def wrap
+    start
+    yield(self)
+  ensure
+    finish
+  end
+
   def start
     self.start_time = Time.now
     print_progress 0
