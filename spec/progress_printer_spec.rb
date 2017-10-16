@@ -66,7 +66,7 @@ RSpec.describe ProgressPrinter do
       end
 
       expect(output.string).to eq(
-        <<~OUTPUT
+        <<-OUTPUT.gsub(/^\s*/, '')
           Count: 0/1   0% calculating...
           Count: 1/1 100% ~0s
           Count: 1/1 100% ~0s
