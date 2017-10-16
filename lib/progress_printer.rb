@@ -51,11 +51,7 @@ class ProgressPrinter
   end
 
   def finish
-    if total
-      print_progress total
-    else
-      print_progress current unless at_milestone?
-    end
+    print_progress current, final: true
   end
 
   def percent_complete
@@ -86,8 +82,12 @@ class ProgressPrinter
     return if percent_remaining == 1.0
     return 0.0 if percent_remaining == 0.0
 
-    time_passed = now - start_time
-    time_passed / percent_complete * (1.0 - percent_complete)
+    time_passed(now) / percent_complete * (1.0 - percent_complete)
+  end
+
+  def time_passed(now = Time.now)
+    return unless start_time
+    now - start_time
   end
 
   def current
@@ -104,7 +104,7 @@ class ProgressPrinter
     @enum ||= (1..Float::INFINITY).enum_for
   end
 
-  def print_progress(n)
+  def print_progress(n, final: false)
     buffer = StringIO.new
 
     buffer.print "#{name}: " if name
@@ -113,9 +113,18 @@ class ProgressPrinter
       buffer.print left_pad(n, total_length)
       buffer.print "/#{total} "
       buffer.print left_pad(percent_complete_string, 4)
-      buffer.print " #{estimated_time_remaining}"
     else
       buffer.print n
+    end
+
+    if final
+      if time_passed
+        buffer.print " #{self.class.format_duration(time_passed)} total"
+      end
+    else
+      if total
+        buffer.print " #{estimated_time_remaining}"
+      end
     end
 
     out.puts buffer.string

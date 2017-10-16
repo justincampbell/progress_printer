@@ -36,7 +36,7 @@ RSpec.describe ProgressPrinter do
           Counting:   0/250   0% calculating...
           Counting: 100/250  40% ~0s
           Counting: 200/250  80% ~0s
-          Counting: 250/250 100% ~0s
+          Counting: 250/250 100% 0s total
         OUTPUT
       )
     end
@@ -69,7 +69,7 @@ RSpec.describe ProgressPrinter do
         <<-OUTPUT.gsub(/^\s*/, '')
           Count: 0/1   0% calculating...
           Count: 1/1 100% ~0s
-          Count: 1/1 100% ~0s
+          Count: 1/1 100% 0s total
         OUTPUT
       )
     end
@@ -84,7 +84,7 @@ RSpec.describe ProgressPrinter do
         printer.increment
       end
 
-      expect(output.string).to eq("0\n1\n")
+      expect(output.string).to eq("0\n1 0s total\n")
     end
 
     it "returns the value of the block" do
@@ -149,31 +149,19 @@ RSpec.describe ProgressPrinter do
 
   describe "#finish" do
     it "prints the current number" do
+      printer.start
       123.times { printer.increment }
       output.reopen
       printer.finish
-      expect(output.string).to eq("123\n")
+      expect(output.string).to eq("123 0s total\n")
     end
 
-    context "with a total" do
-      let(:total) { 123 }
-
-      it "prints the total" do
-        printer.finish
-        expect(output.string).to eq("123/123   0% calculating...\n")
-      end
-    end
-
-    context "when the total was already printed" do
-      before do
-        100.times { printer.increment }
-        expect(output.string).to eq("100\n")
+    context "when start was never called" do
+      it "does not print the total taken" do
+        123.times { printer.increment }
         output.reopen
-      end
-
-      it "does not print the total again" do
         printer.finish
-        expect(output.string).to eq("")
+        expect(output.string).to eq("123\n")
       end
     end
   end
