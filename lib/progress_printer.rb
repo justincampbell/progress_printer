@@ -12,8 +12,8 @@
 #
 #   Counting:   0/250   0% calculating...
 #   Counting: 100/250  40% ~1m30s
-#   Counting: 200/250  80% ~45s
-#   Counting: 250/250 100% ~0s
+#   Counting: 200/250  80% ~30s
+#   Counting: 250/250 100% 2m30s total
 #
 class ProgressPrinter
   DEFAULT_EVERY = 100
