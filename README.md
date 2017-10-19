@@ -38,7 +38,7 @@ Output:
 Counting:   0/250   0% calculating...
 Counting: 100/250  40% ~8s
 Counting: 200/250  80% ~2s
-Counting: 250/250 100% ~0s
+Counting: 250/250 100% 14s total
 ```
 
 You can also achieve the same results by using `.wrap` or `#wrap`:
