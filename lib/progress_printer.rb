@@ -18,6 +18,18 @@
 class ProgressPrinter
   DEFAULT_EVERY = 100
 
+  class << self
+    attr_accessor :silent
+
+    def silence
+      self.silent = true
+    end
+
+    def wrap(*args, &block)
+      new(*args).wrap(&block)
+    end
+  end
+
   attr_reader :total, :name, :every, :out
   attr_accessor :start_time
 
@@ -25,11 +37,12 @@ class ProgressPrinter
     @total = total
     @name = name
     @every = every
-    @out = out
-  end
 
-  def self.wrap(*args, &block)
-    new(*args).wrap(&block)
+    if self.class.silent
+      @out = StringIO.new
+    else
+      @out = out
+    end
   end
 
   def wrap
