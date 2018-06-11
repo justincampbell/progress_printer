@@ -17,6 +17,12 @@ Otherwise, install it with the `gem` command:
 $ gem install progress_printer
 ```
 
+### Already in a console?
+
+Progress Printer is in a single with no dependencies, so you're able to copy/paste the entire file into an `irb` session, and then immediately use `ProgressPrinter.new` (see below). The raw source to copy is available here:
+
+[https://raw.githubusercontent.com/justincampbell/progress_printer/master/lib/progress_printer.rb](https://raw.githubusercontent.com/justincampbell/progress_printer/master/lib/progress_printer.rb)
+
 ## Usage
 
 ### Basic Usage
