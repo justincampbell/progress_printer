@@ -1,4 +1,4 @@
-# ProgressPrinter [![Gem Version](https://badge.fury.io/rb/progress_printer.svg)](https://badge.fury.io/rb/progress_printer) [![Build Status](https://travis-ci.org/justincampbell/progress_printer.svg?branch=master)](https://travis-ci.org/justincampbell/progress_printer)
+# ProgressPrinter [![Gem Version](https://badge.fury.io/rb/progress_printer.svg)](https://badge.fury.io/rb/progress_printer)
 
 > Logs the progress of an operation, with estimated completion time.
 
@@ -19,7 +19,7 @@ $ gem install progress_printer
 
 ### Already in a console?
 
-Progress Printer is in a single with no dependencies, so you're able to copy/paste the entire file into an `irb` session, and then immediately use `ProgressPrinter.new` (see below). The raw source to copy is available here:
+ProgressPrinter is in a single file with no dependencies, so you're able to copy/paste the entire file into an `irb` session, and then immediately use `ProgressPrinter.new` (see below). The raw source to copy is available here:
 
 [https://raw.githubusercontent.com/justincampbell/progress_printer/master/lib/progress_printer.rb](https://raw.githubusercontent.com/justincampbell/progress_printer/master/lib/progress_printer.rb)
 
