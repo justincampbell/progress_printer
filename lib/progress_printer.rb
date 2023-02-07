@@ -25,8 +25,8 @@ class ProgressPrinter
       self.silent = true
     end
 
-    def wrap(*args, &block)
-      new(*args).wrap(&block)
+    def wrap(**args, &block)
+      new(**args).wrap(&block)
     end
   end
 
